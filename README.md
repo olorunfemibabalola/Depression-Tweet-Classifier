@@ -1,25 +1,32 @@
 # 🧠 Depression Risk & Intent Classifier
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Methodology](https://img.shields.io/badge/Methodology-SDLC-purple)
+![Technique](https://img.shields.io/badge/Technique-SHAP_%26_SMOTE-yellow)
 ![Deployment](https://img.shields.io/badge/Deployment-Gradio-pink)
 
 ## 📋 Project Overview
 The **Depression Risk & Intent Classifier** is a Machine Learning application developed to analyze linguistic markers associated with depression and self-harm intent.
 
-This project was executed following the **Software Development Life Cycle (SDLC)**, ensuring a structured approach from requirement analysis to deployment and maintenance.
 
-[attachment_0](attachment)
-
----
-
-## Phase 1: Requirement Analysis & Planning
+## Requirement Analysis
 **Objective:** To distinguish between general sadness and urgent psychological distress in unstructured text.
 
-* **Problem Statement:** Standard sentiment analysis fails to capture the nuance of "intent" in mental health contexts.
-* **Key Requirement:** The model must prioritize **Recall** (minimizing False Negatives) to ensure high-risk cases are not missed.
-* **Ethical Constraint:** The system must explain its reasoning (XAI) to be useful in a clinical support setting.
 
-## Phase 2: System Design
+
+### ✅ Functional Requirements
+* **Input Handling:** The system must accept unstructured text input (e.g., social media posts, journal entries) via a web interface.
+* **Classification:** The model must classify inputs into distinct risk categories: *Low Risk, High Risk,* or *Urgent Intent*.
+* **Explainability:** The system must generate a visual explanation (SHAP plot) highlighting the specific words that triggered the risk classification.
+* **Confidence Scoring:** The UI must display the probability score (0-100%) alongside the predicted label.
+
+### ⚖️ Non-Functional Requirements
+* **Recall Optimization:** The model must prioritize **Recall** over Precision to minimize False Negatives (critical for safety in health applications).
+* **Interpretability:** The decision logic must be transparent and clinically interpretable, not a "black box."
+* **Latency:** Inference must occur in real-time (<2 seconds) to ensure a smooth user experience on the Gradio interface.
+* **Data Privacy:** The application must process data statelessly; no user input is stored or logged to ensure anonymity.
+
+## System Design
 **Architecture:** A modular pipeline designed for reproducibility and scalability.
 
 * **Tech Stack:**
@@ -29,25 +36,25 @@ This project was executed following the **Software Development Life Cycle (SDLC)
     * **UI Framework:** Gradio
 * **Data Flow:** Text Input $\rightarrow$ Preprocessing (Lemmatization/Stopwords) $\rightarrow$ TF-IDF Vectorization $\rightarrow$ Classification $\rightarrow$ SHAP Explanation $\rightarrow$ UI Output.
 
-## Phase 3: Implementation & Development
+## Implementation & Development
 This phase focused on building the core logic and handling real-world data challenges.
 
 * **Data Preprocessing:** Implemented custom tokenization to retain psychological keywords often removed by standard stopword lists.
 * **Handling Class Imbalance:** Utilized **SMOTE (Synthetic Minority Over-sampling Technique)** to generate synthetic samples for the "High Risk" class, preventing model bias toward the majority class.
 * **Model Selection:** Trained multiple supervised learning algorithms (Logistic Regression, Random Forest), optimizing for the minority class performance.
 
-## Phase 4: Testing & Evaluation
-Rigorous testing was conducted to ensure model reliability and interpretability.
+## Testing & Evaluation
+Rigorous testing was conducted to verify that both functional and non-functional requirements were met.
 
 * **Performance Metrics:**
-    * Optimized for **F1-Score** and **Recall** rather than raw Accuracy.
+    * Achieved optimal **F1-Score** and **Recall** on the validation set.
 * **Explainable AI (XAI):**
     * Integrated **SHAP (SHapley Additive exPlanations)** values to validate feature importance.
     * *Result:* The model successfully identified high-risk terms (e.g., "hopeless", "forever") as top predictors.
 
 
 
-## Phase 5: Deployment
+## Deployment
 The model was packaged into an interactive web application for end-user accessibility.
 
 * **Interface:** Built with **Gradio** to allow real-time text analysis.
